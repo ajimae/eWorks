@@ -1,4 +1,5 @@
 import { UserRepository } from '../repository';
+import Authentication from '../middleware/Authentication';
 
 /**
  * @description UserController
@@ -17,19 +18,22 @@ export default class UserController {
    */
   static registerUser = async (req, res) => {
     try {
-      const user = await UserRepository.registerUser(req.body)
+      const userObject = await UserRepository.registerUser(req.body);
+      const user = userObject.toObject();
+      const token = Authentication.authenticate(user);
+
+      delete user.password;
       res.status(201).json({
         status: 'success',
         data: {
           user,
+          token
         }
       });
     } catch (error) {
       res.status(500).json({
         status: 'error',
-        data: {
-          error
-        }
+        message: error.message
       });
     }
   }
