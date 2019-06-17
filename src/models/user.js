@@ -1,20 +1,29 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+/**
+ * @description user entity
+ */
 const userSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
+  firstName: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  lastName: {
+    type: String,
+    required: true,
+    unique: false
+  },
   email: {
     type: String,
     required: true,
     unique: true
   },
-  phone: {
+  password: {
     type: String,
-    required: false,
-    unique: true
+    required: true
   },
-  password: String,
   role: {
     type: String,
     required: true,
