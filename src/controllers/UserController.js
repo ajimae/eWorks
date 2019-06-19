@@ -4,7 +4,7 @@ import Authentication from '../middleware/Authentication';
 /**
  * @description UserController
  * 
- * @function registerUser
+ * @method registerUser
  */
 export default class UserController {
 
