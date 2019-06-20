@@ -1,10 +1,16 @@
-import models from '../models';
+// third-party library
 import bcrypt from 'bcryptjs';
+
+// project files
+import models from '../models';
+import ProfileRepository from './ProfileRepository';
 
 /**
  * @description user repository class
  * 
+ * @method isRegistered
  * @method registerUser
+ * @method loginUser
  * 
  */
 export default class UserRepository {
@@ -16,9 +22,7 @@ export default class UserRepository {
    * @returns { boolean } true | false
    */
   static isRegistered = async (email) => {
-    const isEmailRegistered = models.User;
-
-    const user = await isEmailRegistered.findOne({ email });
+    const user = await models.User.findOne({ email });
 
     if (user) {
       return true;
@@ -34,21 +38,34 @@ export default class UserRepository {
    * @return user object
    */
   static registerUser = async ({ firstName, lastName, email, phone, password }) => {
-    const userModel = new models.User({
-      firstName,
-      lastName,
-      email,
-      phone,
-      password
-    });
+    // insert profile initial details
+    const profile = await ProfileRepository.insertInitialDetails({ firstName, lastName, email });
+    const profileId = profile.id;
 
-    const user = await userModel.save();
+    if (profileId) {
+      const userModel = new models.User({
+        firstName,
+        lastName,
+        email,
+        phone,
+        password,
+        profileId
+      });
 
-    if (user) {
-      return user;
+      const user = await userModel.save();
+      if (user) {
+        return user;
+      }
+      
+      // remove created profile if user creation fails
+      const profile = await ProfileRepository.deleteUserProfile(profileId);
+      if (typeof profile === 'string') {
+        throw new Error(profile);
+      }
+      throw new Error('there was error registering user');
     }
-    
-    throw new Error('there was error registering user');
+
+    throw new Error('there was error registering user profile');
   }
 
   /**

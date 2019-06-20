@@ -1,5 +1,7 @@
 import UserRepository from './UserRepository';
+import ProfileRepository from './ProfileRepository';
 
 export {
-  UserRepository
+  UserRepository,
+  ProfileRepository
 }
