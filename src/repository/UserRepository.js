@@ -30,6 +30,7 @@ export default class UserRepository {
 
     return false;
   }
+  
   /**
    * @description method to handle user registration
    * 
@@ -37,7 +38,11 @@ export default class UserRepository {
    * 
    * @return user object
    */
-  static registerUser = async ({ firstName, lastName, email, phone, password }) => {
+  static registerUser = async (requestObject) => {
+    const { email, phone, password } = requestObject;
+    const lastName = requestObject.lastName.toString().toLowerCase();
+    const firstName = requestObject.firstName.toString().toLowerCase();
+
     // insert profile initial details
     const profile = await ProfileRepository.insertInitialDetails({ firstName, lastName, email });
     const profileId = profile.id;
@@ -79,7 +84,7 @@ export default class UserRepository {
     const isUser = await this.isRegistered(email);
 
     if (!isUser) {
-      throw new Error('user with specified email does not found');
+      throw new Error('user with specified email is not found');
     }
 
     const userObject = models.User;
@@ -90,6 +95,6 @@ export default class UserRepository {
       return user;
     }
 
-    throw new Error('incorrect email or password');
+    return null;
   }
 }

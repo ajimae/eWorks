@@ -1,7 +1,12 @@
-import { expect } from 'chai';
+import signup from './integration/signup.test';
+import signin from './integration/signin.test';
 
-describe('demo test', () => {
-  it('should return true if true is equals true', () => {
-    expect(true).to.equals(true);
-  });
-});
+import signupUnit from './unit/signup.unit';
+import profileUnit from './unit/profile.unit';
+
+export {
+  signup,
+  signin,
+  signupUnit,
+  profileUnit
+}
