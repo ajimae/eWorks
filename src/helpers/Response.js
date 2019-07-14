@@ -1,18 +1,18 @@
 /**
  * @class Response
- * 
- * @description class to handle all http response 
+ *
+ * @description class to handle all http response
  */
 export default class Response {
   /**
-   * 
+   *
    * @description method to handle all success responses
-   * 
+   *
    * @param response Object
    * @param statusCode String
    * @param message String
    * @param data Object | Array
-   * 
+   *
    * @return response JSON
    */
   static successResponse = (response, statusCode, message, data) => {
@@ -25,19 +25,19 @@ export default class Response {
     }
 
     return response.status(statusCode).json({
-      ...responseBody
+      ...responseBody,
     });
   }
 
-  /**
-   * 
+  /*
+   *
    * @description method to handle all error responses
-   * 
+   *
    * @parma {response object}
    * @param statusCode
    * @param message
    * @param data
-   * 
+   *
    * @return response JSON
    */
   static errorResponse = (response, statusCode, message, data) => {
@@ -50,7 +50,7 @@ export default class Response {
     }
 
     return response.status(statusCode).json({
-      ...responseBody
+      ...responseBody,
     });
   }
 }

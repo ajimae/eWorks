@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
 // third-party libraries
 import 'babel-polyfill';
 import chai from 'chai';
@@ -19,7 +21,6 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('signin test', () => {
-
   it('should throw validation error if email is not provided', (done) => {
     chai.request(server)
       .get('/api/v1/users')

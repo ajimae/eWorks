@@ -2,22 +2,22 @@ import Response from '../helpers/Response';
 import UserInputs from '../utility/UserInput';
 
 /**
- * 
+ *
  * @class Validation
  * @description class to handle request validations
- * 
+ *
  * @method signupValidator
  * @method signinValidator
  */
 export default class Validations {
   /**
-   * 
+   *
    * @description signupValidator
-   * 
+
    * @param {object} request
    * @param {object} response
    * @param {function} next
-   * 
+   *
    * @returns {object} http response object
    */
   static signupValidator = (request, response, next) => {
@@ -35,13 +35,13 @@ export default class Validations {
   }
 
   /**
-   * 
+   *
    * @description signinValidator
-   * 
+   *
    * @param {object} request
    * @param {object} response
    * @param {function} next
-   * 
+   *
    * @returns {object} http response object
    */
   static signinValidator = (request, response, next) => {

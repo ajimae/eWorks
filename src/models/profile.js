@@ -12,36 +12,36 @@ const userProfile = new mongoose.Schema({
   email: {
     type: String,
     trim: true,
-    required: false
+    required: false,
   },
   dob: {
     type: Date,
     required: false,
-    unique: false
+    unique: false,
   },
   gender: {
     type: String,
     required: false,
-    unique: false
+    unique: false,
   },
   contact: [{
     type: String,
     trim: true,
     required: false,
-    unique: false
+    unique: false,
   }],
   address: [{
     type: String,
-    required: false
+    required: false,
   }],
   city: {
     type: String,
-    required: false
+    required: false,
   },
   country: {
     type: String,
     required: false,
-    unique: false
+    unique: false,
   },
   skills: [{
     type: String,

@@ -1,3 +1,5 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-undef */
 // third-party libraries
 import 'babel-polyfill';
 import chai from 'chai';
