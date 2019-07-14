@@ -1,5 +1,6 @@
 import { UserRepository } from '../repository';
 import Authentication from '../middleware/Authentication';
+import Response from '../helpers/Response';
 
 /**
  * @description UserController
@@ -7,7 +8,6 @@ import Authentication from '../middleware/Authentication';
  * @method registerUser
  */
 export default class UserController {
-
   /**
    * @description register new user
    * 
@@ -26,24 +26,13 @@ export default class UserController {
         const token = Authentication.authenticate(user);
 
         delete user.password;
-        res.header('Authorization', `Bearer ${token}`).status(201).json({
-          status: 'success',
-          data: {
-            user,
-            token
-          }
-        });
+        res.header('Authorization', `Bearer ${token}`);
+        return Response.successResponse(res, 201, 'user created successfully', { user, token });
       } else {
-        return res.status(409).json({
-          status: 'error',
-          message: `user with the email ${email} already exists`
-        });
+        return Response.errorResponse(res, 409, `user with the email ${email} already exists`);
       }
     } catch (error) {
-      res.status(500).json({
-        status: 'error',
-        message: error.message
-      });
+      return Response.errorResponse(res, 500, error.message);
     }
   }
 
@@ -61,27 +50,18 @@ export default class UserController {
       if (isUser) {
         const user = isUser.toObject();
         const token = Authentication.authenticate(user);
-        
+
         delete user.password;
-        return res.status(200).json({
-          status: 'success',
-          data: {
-            user,
-            token
-          }
-        });
+        res.header('Authorization', `Bearer ${token}`);
+        return Response.successResponse(res, 200, 'login successful', { isUser, token });
       }
-      return res.status(404).json({
-        status: 'success',
-        data: {
-          isUser
-        }
-      });
+      return Response.errorResponse(res, 404, 'email or password incorrect', isUser);
     } catch (error) {
-      res.status(500).json({
-        status: 'error',
-        message: error.message
-      })
+      let status = 500;
+      if (error.message === 'user with specified email is not found') {
+        status = 404;
+      }
+      return Response.errorResponse(res, status, error.message);
     }
   }
 }

@@ -15,8 +15,10 @@ export default class ProfileRepository {
    * 
    * @returns { boolean } profile | false
    */
-  static insertInitialDetails = async ({firstName, lastName, email}) => {
+  static insertInitialDetails = async ({ firstName, lastName, email }) => {
     const name = `${firstName} ${lastName}`;
+    
+    if (!email || !name) return false;
     const userProfile = new models.Profile({
       name,
       email
