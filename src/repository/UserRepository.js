@@ -7,18 +7,18 @@ import ProfileRepository from './ProfileRepository';
 
 /**
  * @description user repository class
- * 
+ *
  * @method isRegistered
  * @method registerUser
  * @method loginUser
- * 
+ *
  */
 export default class UserRepository {
   /**
    * @description method to check if user already exists
-   * 
+   *
    * @param email
-   * 
+   *
    * @returns { boolean } true | false
    */
   static isRegistered = async (email) => {
@@ -30,12 +30,12 @@ export default class UserRepository {
 
     return false;
   }
-  
+
   /**
    * @description method to handle user registration
-   * 
+   *
    * @param req.body
-   * 
+   *
    * @return user object
    */
   static registerUser = async (requestObject) => {
@@ -54,18 +54,18 @@ export default class UserRepository {
         email,
         phone,
         password,
-        profileId
+        profileId,
       });
 
       const user = await userModel.save();
       if (user) {
         return user;
       }
-      
+
       // remove created profile if user creation fails
-      const profile = await ProfileRepository.deleteUserProfile(profileId);
-      if (typeof profile === 'string') {
-        throw new Error(profile);
+      const userProfile = await ProfileRepository.deleteUserProfile(profileId);
+      if (typeof userProfile === 'string') {
+        throw new Error(userProfile);
       }
       throw new Error('there was error registering user');
     }
@@ -75,9 +75,9 @@ export default class UserRepository {
 
   /**
    * @description method to handle user login
-   * 
+   *
    * @parameter req.body
-   * 
+   *
    * @return user details { res.body }
    */
   static loginUser = async ({ email, password }) => {

@@ -14,13 +14,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/v1', routes);
-app.use('*', async (req, res) => {
-  return res.status(404).json({
-    status: 'error',
-    data: {
-      message: 'resource not found on this server'
-    }
-  })
-});
+app.use('*', async (req, res) => res.status(404).json({
+  status: 'error',
+  data: {
+    message: 'resource not found on this server',
+  },
+}));
 
 export default app;

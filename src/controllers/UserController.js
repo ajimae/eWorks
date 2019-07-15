@@ -4,16 +4,16 @@ import Response from '../helpers/Response';
 
 /**
  * @description UserController
- * 
+ *
  * @method registerUser
  */
 export default class UserController {
   /**
    * @description register new user
-   * 
+   *
    * @param req
    * @param res
-   * 
+   *
    * @return { json } user object
    */
   static registerUser = async (req, res) => {
@@ -28,9 +28,9 @@ export default class UserController {
         delete user.password;
         res.header('Authorization', `Bearer ${token}`);
         return Response.successResponse(res, 201, 'user created successfully', { user, token });
-      } else {
-        return Response.errorResponse(res, 409, `user with the email ${email} already exists`);
       }
+
+      return Response.errorResponse(res, 409, `user with the email ${email} already exists`);
     } catch (error) {
       return Response.errorResponse(res, 500, error.message);
     }
@@ -38,10 +38,10 @@ export default class UserController {
 
   /**
    * @description user login
-   * 
+   *
    * @param req
    * @param res
-   * 
+   *
    * @return { json } user object
    */
   static loginUser = async (req, res) => {

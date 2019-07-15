@@ -8,5 +8,5 @@ export {
   signup,
   signin,
   signupUnit,
-  profileUnit
-}
+  profileUnit,
+};

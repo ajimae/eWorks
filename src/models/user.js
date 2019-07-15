@@ -1,3 +1,6 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-shadow */
+/* eslint-disable func-names */
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -10,39 +13,39 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
     required: true,
-    unique: false
+    unique: false,
   },
   lastName: {
     type: String,
     trim: true,
     lowercase: true,
     required: true,
-    unique: false
+    unique: false,
   },
   email: {
     type: String,
     trim: true,
     lowercase: true,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
     required: true,
-    default: 'regular'
+    default: 'regular',
   },
   isActive: {
     type: Boolean,
     required: false,
-    default: false
+    default: false,
   },
   profileId: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Profile'
+    ref: 'Profile',
   }],
 }, { timestamps: true });
 

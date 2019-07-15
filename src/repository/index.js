@@ -3,5 +3,5 @@ import ProfileRepository from './ProfileRepository';
 
 export {
   UserRepository,
-  ProfileRepository
-}
+  ProfileRepository,
+};

@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable camelcase */
 // third-party libraries
 import 'babel-polyfill';
 import chai from 'chai';
@@ -21,7 +23,6 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('signup test', () => {
-
   before(() => {
     connection.connection.dropDatabase();
   });
