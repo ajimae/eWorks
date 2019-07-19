@@ -160,7 +160,7 @@ describe('signup test', () => {
         expect(response.headers['content-type']).equal('application/json; charset=utf-8');
         done();
       });
-  });
+  }).timeout(7000);
 
   it('should throw a validation when using duplicate email', (done) => {
     chai.request(server)

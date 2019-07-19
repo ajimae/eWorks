@@ -59,13 +59,13 @@ export const user_wrong_email = {
 
 // correct email but wrong password
 export const user_wrong_password = {
-  email: 'meeky@mail.com',
+  email: 'gerda44@ethereal.email',
   password: '-1234567',
 };
 
 export const user = {
   firstName: 'chukwuemeka',
   lastName: 'ajima',
-  email: 'meeky@mail.com',
+  email: 'gerda44@ethereal.email',
   password: '-12345678',
 };

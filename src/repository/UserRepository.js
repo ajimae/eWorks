@@ -76,7 +76,7 @@ export default class UserRepository {
   /**
    * @description method to handle user login
    *
-   * @parameter req.body
+   * @param req.body
    *
    * @return user details { res.body }
    */
@@ -96,5 +96,32 @@ export default class UserRepository {
     }
 
     return null;
+  }
+
+  /**
+   * @description method to handle user account verification
+   *
+   * @param email
+   *
+   * @return {Object | String } user | error object
+   */
+  static verifyUserAccount = async (mail) => {
+    const isRegistered = await this.isRegistered(mail);
+
+    if (!isRegistered) {
+      return false;
+    }
+
+    const user = await models.User.findOne({ email: mail, isActive: false });
+
+    if (!user) {
+      throw new Error('user account already verified');
+    }
+
+    const { email } = user;
+    const option = { new: true };
+    const verifiedUser = await models.User.findOneAndUpdate({ email }, { isActive: true }, option);
+
+    return verifiedUser;
   }
 }
