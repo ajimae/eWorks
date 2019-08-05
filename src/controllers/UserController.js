@@ -1,7 +1,13 @@
+import Encryption from '../helpers/Encryption';
+
 import { UserRepository } from '../repository';
 import Authentication from '../middleware/Authentication';
 import Response from '../helpers/Response';
+import SendMail from '../helpers/SendMail';
+import accountVerification from '../templates/accountVerification';
 
+const { decrypt } = Encryption;
+const { successResponse, errorResponse } = Response;
 /**
  * @description UserController
  *
@@ -14,35 +20,48 @@ export default class UserController {
    * @param req
    * @param res
    *
-   * @return { json } user object
+   * @return { json } user | error object
    */
   static registerUser = async (req, res) => {
     const { email } = req.body;
     const isUser = await UserRepository.isRegistered(email);
     try {
       if (!isUser) {
+        // construct account verification email
+        const mail = {
+          to: email,
+          subject: 'Welcome to eWorks',
+          html: accountVerification(req.body),
+        };
+
+        const mailResponse = await SendMail.sendMail(mail);
+        if (!mailResponse.messageId) {
+          return errorResponse(res, 500, 'unable to send email', mailResponse.message);
+        }
+
         const userObject = await UserRepository.registerUser(req.body);
         const user = userObject.toObject();
         const token = Authentication.authenticate(user);
 
         delete user.password;
         res.header('Authorization', `Bearer ${token}`);
-        return Response.successResponse(res, 201, 'user created successfully', { user, token });
+        return successResponse(res, 201, 'user created successfully', { user, token });
       }
 
-      return Response.errorResponse(res, 409, `user with the email ${email} already exists`);
+      return errorResponse(res, 409, `user with the email ${email} already exists`);
     } catch (error) {
-      return Response.errorResponse(res, 500, error.message);
+      return errorResponse(res, 500, error.message);
     }
   }
 
   /**
+   *
    * @description user login
    *
    * @param req
    * @param res
    *
-   * @return { json } user object
+   * @return { json } user | error object
    */
   static loginUser = async (req, res) => {
     try {
@@ -53,15 +72,46 @@ export default class UserController {
 
         delete user.password;
         res.header('Authorization', `Bearer ${token}`);
-        return Response.successResponse(res, 200, 'login successful', { isUser, token });
+        return successResponse(res, 200, 'login successful', { user, token });
       }
-      return Response.errorResponse(res, 404, 'email or password incorrect', isUser);
+      return errorResponse(res, 404, 'email or password incorrect', isUser);
     } catch (error) {
       let status = 500;
       if (error.message === 'user with specified email is not found') {
         status = 404;
       }
-      return Response.errorResponse(res, status, error.message);
+      return errorResponse(res, status, error.message);
+    }
+  }
+
+  /**
+   *
+   * @description account verification method
+   *
+   * @param req
+   * @param res
+   *
+   * @returns { json } user | error object
+   */
+  static verifyAccount = async (req, res) => {
+    const { id } = req.query;
+    const mail = await decrypt(id);
+    try {
+      const isUser = await UserRepository.verifyUserAccount(mail);
+
+      if (isUser) {
+        return successResponse(res, 200, 'account verified successfully', isUser);
+      }
+
+      return errorResponse(res, 400, 'user with the specified email is not a registered member');
+    } catch (error) {
+      let status = 500;
+
+      if (error.message === 'user account already verified') {
+        status = 400;
+      }
+
+      return errorResponse(res, status, error.message);
     }
   }
 }

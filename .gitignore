@@ -68,3 +68,8 @@ api.http
 
 # ignore distribution folder
 dist/
+
+# docker files
+.dockerignore
+docker-compose.yml
+Dockerfile

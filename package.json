@@ -7,7 +7,7 @@
     "start": "node dist/index",
     "start:dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./index.js",
     "build": "yarn clean && babel src -d dist/src && babel index.js -d dist",
-    "test": "cross-env NODE_ENV=test nyc mocha src/tests/index.js --recursive --exit",
+    "test": "cross-env NODE_ENV=test nyc mocha src/tests/index.js --exit",
     "prepublish": "yarn build",
     "clean": "rm -rf dist",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
@@ -50,7 +50,9 @@
     "express": "^4.16.4",
     "istanbul": "^0.4.5",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.4.2"
+    "mongoose": "^5.4.2",
+    "nodemailer": "4.7.0",
+    "simple-crypto-js": "^2.0.2"
   },
   "nyc": {
     "require": [

@@ -2,7 +2,7 @@
 export const user = {
   firstName: 'chukwuemeka',
   lastName: 'ajima',
-  email: 'meeky@mail.com',
+  email: 'gerda44@ethereal.email',
   password: '-12345678',
 };
 
@@ -16,6 +16,6 @@ export const user_wrong_email = {
 export const user_no_password = {
   firstName: 'chukwuemeka',
   lastName: 'ajima',
-  email: 'meeky.ae@gmail.com',
+  email: 'gerda44@ethereal.email',
   password: undefined,
 };

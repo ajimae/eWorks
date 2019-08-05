@@ -8,9 +8,11 @@ import Validations from '../middleware/Validations';
 const { signupValidator, signinValidator } = Validations;
 
 const router = Router();
-const { registerUser, loginUser } = UserController;
+const { registerUser, loginUser, verifyAccount } = UserController;
 
 router.post('/users', signupValidator, registerUser);
 router.get('/users', signinValidator, loginUser);
+
+router.patch('/users/verify', verifyAccount);
 
 export default router;

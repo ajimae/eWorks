@@ -20,7 +20,11 @@ export default class {
     _id, email, isActive, role,
   }) => jwt.sign({
     _id, email, isActive, role,
-  }, process.env.SECRET_KEY, { expiresIn: '720h' })
+  }, process.env.SECRET_KEY, {
+    expiresIn: '720h',
+    audience: process.env.AUDIENCE,
+    issuer: process.env.ISSUER,
+  });
 
   /**
    * @description verify jwt token
