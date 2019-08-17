@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import models from '../models';
 
 /**
@@ -31,6 +32,55 @@ export default class ProfileRepository {
     }
 
     return false;
+  }
+
+  /**
+   * @description method to update profile information
+   *
+   * @param profileObject
+   *
+   * @returns { object } userProfile | error
+   */
+  static updateUserProfile = async (userProfileObject) => {
+    const {
+      email, contact, address, details,
+    } = userProfileObject;
+
+    const { skills } = details;
+    const userProfile = {
+      ...userProfileObject,
+      $push: { contact },
+      $push: { address },
+      $push: { ...details, skills },
+    };
+
+    const condition = email ? { email } : { email: { $exists: false } };
+    const update = { $set: userProfile };
+    const updatedProfile = await models.Profile.findOneAndUpdate(condition, update, { new: true });
+
+    if (!userProfile) {
+      return false;
+    }
+
+    return updatedProfile;
+  }
+
+  /**
+   * @description method to delete a specific user profile
+   *
+   * @param _id
+   *
+   * @return { object | String }
+   */
+  static getUserProfile = async (_id) => {
+    const userProfileObject = models.Profile;
+    const userProfile = await userProfileObject.findById({ _id });
+
+    if (!userProfile) {
+      return null;
+    }
+
+    return userProfile;
   }
 
   /**

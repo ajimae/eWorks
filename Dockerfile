@@ -13,7 +13,7 @@ COPY . .
 RUN yarn install
 
 # compile all es6 to es5
-RUN yarn build
+RUN yarn prepublish
 
 # expose application default port
 EXPOSE 3000

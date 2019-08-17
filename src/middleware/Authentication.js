@@ -1,5 +1,8 @@
 import jwt from 'jsonwebtoken';
 import models from '../models';
+import Response from '../helpers/Response';
+
+const { errorResponse } = Response;
 
 /**
  * @description jwt base authentication class
@@ -56,39 +59,36 @@ export default class {
    */
   static verifyUserToken = (req, res, next) => {
     if (!req.headers.authorization) {
-      return res.status(401).json({
-        status: 'error',
-        error: 'no token provided',
-      });
+      // return res.status(401).json({
+      //   status: 'error',
+      //   error: 'no token provided',
+      // });
+      return errorResponse(res, 401, 'no token provided');
     }
 
     const token = req.headers.authorization.split(' ')[1];
     const decoded = this.verifyToken(token);
 
     if (decoded.error) {
-      res.status(500).json({
-        status: 'error',
-        message: 'failed to authenticate token',
-        error: decoded.error,
-      });
+      // res.status(500).json({
+      //   status: 'error',
+      //   message: 'failed to authenticate token',
+      //   error: decoded.error,
+      // });
+      return errorResponse(res, 500, 'failed to authenticate token', decoded.error);
     }
 
-    if (!req.params.id) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'invalid url parameter',
-      });
-    }
+    // if (!req.decoded.id) {
+    //   return errorResponse(res, 400, 'invalid url parameter');
+    // }
 
-    const user = new models.User().findById(req.params.id);
+    const { _id } = decoded.payload;
+    const user = models.User.findOne({ _id });
     if (user) {
       req.decoded = decoded.payload;
       next();
     } else {
-      return res.status(404).json({
-        status: 'success',
-        message: 'user not found',
-      });
+      return errorResponse(res, 404, 'user not found');
     }
   }
 }

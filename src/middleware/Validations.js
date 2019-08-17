@@ -1,5 +1,8 @@
 import Response from '../helpers/Response';
 import UserInputs from '../utility/UserInput';
+import UserRepository from '../repository/UserRepository';
+
+const { errorResponse } = Response;
 
 /**
  *
@@ -29,7 +32,7 @@ export default class Validations {
       'lastName',
     ]);
     if (!isValid) {
-      return Response.errorResponse(response, 400, 'invalid input', issues);
+      return errorResponse(response, 400, 'invalid input', issues);
     }
     next();
   }
@@ -42,7 +45,7 @@ export default class Validations {
    * @param {object} response
    * @param {function} next
    *
-   * @returns {object} http response object
+   * @returns {object} http response object | next
    */
   static signinValidator = (request, response, next) => {
     const { validateFields } = UserInputs;
@@ -52,7 +55,28 @@ export default class Validations {
     ]);
 
     if (!isValid) {
-      return Response.errorResponse(response, 400, 'invalid input', issues);
+      return errorResponse(response, 400, 'invalid input', issues);
+    }
+    next();
+  }
+
+  /**
+   *
+   * @description method to check if user account is verified
+   *
+   * @param {object} request
+   * @param {object} response
+   *
+   * @returns {object} http response object | next
+   */
+  static isAccountVerified = async (request, response, next) => {
+    const { email } = request.decoded;
+    const { isUserAccountVerified } = UserRepository;
+
+    const isVerified = await isUserAccountVerified(email);
+
+    if (!isVerified) {
+      return errorResponse(response, 400, 'please verify your account to proceed');
     }
     next();
   }

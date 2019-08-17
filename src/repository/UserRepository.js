@@ -124,4 +124,21 @@ export default class UserRepository {
 
     return verifiedUser;
   }
+
+  /**
+   * @description method to check if user account is verified
+   *
+   * @param email
+   *
+   * @return { boolean } true | false
+   */
+  static isUserAccountVerified = async (email) => {
+    const isVerified = await models.User.findOne({ email, isActive: true });
+
+    if (isVerified) {
+      return true;
+    }
+
+    return false;
+  }
 }
