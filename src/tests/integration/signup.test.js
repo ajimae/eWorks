@@ -17,6 +17,7 @@ import {
   user_invalid_email,
   user_short_password_length,
   user,
+  user2,
 } from './fixtures';
 
 chai.use(chaiHttp);
@@ -160,7 +161,22 @@ describe('signup test', () => {
         expect(response.headers['content-type']).equal('application/json; charset=utf-8');
         done();
       });
-  }).timeout(7000);
+  }).timeout(20000);
+
+  it('should register a second user when all inputs are correct', (done) => {
+    chai.request(server)
+      .post('/api/v1/users')
+      .send(user2)
+      .end((error, response) => {
+        if (error) throw new Error(error);
+        expect(response.statusCode).equal(201);
+        expect(response.body.status).equal('success');
+        expect(response.body.data.token).to.be.a('string');
+        expect(response.body.message).equal('user created successfully');
+        expect(response.headers['content-type']).equal('application/json; charset=utf-8');
+        done();
+      });
+  }).timeout(20000);
 
   it('should throw a validation when using duplicate email', (done) => {
     chai.request(server)

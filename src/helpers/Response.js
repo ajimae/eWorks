@@ -29,7 +29,7 @@ export default class Response {
     });
   }
 
-  /*
+  /**
    *
    * @description method to handle all error responses
    *

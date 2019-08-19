@@ -69,3 +69,100 @@ export const user = {
   email: 'gerda44@ethereal.email',
   password: '-12345678',
 };
+
+export const user2 = {
+  firstName: 'chukwuemeka',
+  lastName: 'ajima',
+  email: 'gerda44@ethereal.mail',
+  password: '-12345678',
+};
+
+export const user_profile = {
+  name: 'ajima chukwuemeka',
+  email: 'gerda44@ethereal.email',
+  dob: '1995-01-01T00:00:00Z',
+  gender: 'male',
+  address: 'Lagos Lagos',
+  contact: '0808123456',
+  city: 'Lagos',
+  country: 'Nigeria',
+  avatar: 'https://www.example.com/images/avatar.png',
+  handles: {
+    twitter: 'twitter_updated',
+    facebook: 'facebook_updated',
+    linkedin: 'linkedin',
+    github: 'github_updated',
+  },
+  additionalInfo: {
+    profileViewCount: 0,
+    lastSeen: '1995-01-01T00:00:00Z',
+  },
+  details: {
+    badge: 'https://www.example.com/images/badge.png',
+    ratings: 4.5,
+    skills: [
+      { primarySkills: 'nodejs reactjs angularjs' },
+      { secondarySkills: 'java python php' },
+    ],
+  },
+};
+
+export const user_profile_unknownmail = {
+  name: 'ajima chukwuemeka',
+  email: 'gerda44@ethereal.eemail',
+  dob: '1995-01-01T00:00:00Z',
+  gender: 'male',
+  address: 'Lagos Lagos',
+  contact: '0808123456',
+  city: 'Lagos',
+  country: 'Nigeria',
+  avatar: 'https://www.example.com/images/avatar.png',
+  handles: {
+    twitter: 'twitter_updated',
+    facebook: 'facebook_updated',
+    linkedin: 'linkedin',
+    github: 'github_updated',
+  },
+  additionalInfo: {
+    profileViewCount: 0,
+    lastSeen: '1995-01-01T00:00:00Z',
+  },
+  details: {
+    badge: 'https://www.example.com/images/badge.png',
+    ratings: 4.5,
+    skills: [
+      { primarySkills: 'nodejs reactjs angularjs' },
+      { secondarySkills: 'java python php' },
+    ],
+  },
+};
+
+export const user_profile_unknownmail2 = {
+  name: 'ajima chukwuemeka',
+  email: 'gerda44@ethereal.mail',
+  dob: '1995-01-01T00:00:00Z',
+  gender: 'male',
+  address: 'Lagos Lagos',
+  contact: '0808123456',
+  city: 'Lagos',
+  country: 'Nigeria',
+  avatar: 'https://www.example.com/images/avatar.png',
+  handles: {
+    twitter: 'twitter_updated',
+    facebook: 'facebook_updated',
+    linkedin: 'linkedin',
+    github: 'github_updated',
+  },
+  additionalInfo: {
+    profileViewCount: 0,
+    lastSeen: '1995-01-01T00:00:00Z',
+  },
+  details: {
+    badge: 'https://www.example.com/images/badge.png',
+    ratings: 4.5,
+    skills: [
+      { primarySkills: 'nodejs reactjs angularjs' },
+      { secondarySkills: 'java python php' },
+    ],
+  },
+};

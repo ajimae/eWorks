@@ -68,3 +68,6 @@ api.http
 
 # ignore distribution folder
 dist/
+
+# tasks { todos }
+tasks.md

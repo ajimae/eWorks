@@ -8,6 +8,7 @@ import accountVerification from '../templates/accountVerification';
 
 const { decrypt } = Encryption;
 const { successResponse, errorResponse } = Response;
+
 /**
  * @description UserController
  *

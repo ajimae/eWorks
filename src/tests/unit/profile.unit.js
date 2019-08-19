@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
 // third-party libraries
@@ -6,7 +7,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 // project files
-import { user } from './fixtures';
+import { user, user_profile } from './fixtures';
 import {
   ProfileRepository,
 } from '../../repository';
@@ -21,7 +22,7 @@ describe('profile unit tests', () => {
     expect(profile).equal(false);
   });
 
-  it('should return insert initial profile details if all is good', async () => {
+  it('should return the inserted profile details if all is good', async () => {
     const profile = await ProfileRepository.insertInitialDetails(user);
     profileId = profile.id;
     expect(profile.email).equal(user.email);
@@ -35,5 +36,10 @@ describe('profile unit tests', () => {
   it('should return success when deleting profile a valid profile id', async () => {
     const deletedProfile = await ProfileRepository.deleteUserProfile(profileId);
     expect(deletedProfile.message).equal('profile successfully removed');
+  });
+
+  it('should return null when email is not found for update request', async () => {
+    const updateProfile = await ProfileRepository.updateUserProfile(user_profile);
+    expect(updateProfile).equal(null);
   });
 });
