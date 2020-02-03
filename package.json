@@ -52,6 +52,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.2",
     "nodemailer": "^6.3.0",
+    "redis": "^2.8.0",
     "simple-crypto-js": "^2.0.2"
   },
   "nyc": {

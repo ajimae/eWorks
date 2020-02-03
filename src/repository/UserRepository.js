@@ -5,6 +5,8 @@ import bcrypt from 'bcryptjs';
 import models from '../models';
 import ProfileRepository from './ProfileRepository';
 
+// import { redisClient } from '../db/redis-client';
+
 /**
  * @description user repository class
  *

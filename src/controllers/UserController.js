@@ -5,6 +5,7 @@ import Authentication from '../middleware/Authentication';
 import Response from '../helpers/Response';
 import SendMail from '../helpers/SendMail';
 import accountVerification from '../templates/accountVerification';
+import { redisClient } from '../db/redis-client';
 
 const { decrypt } = Encryption;
 const { successResponse, errorResponse } = Response;
@@ -113,6 +114,24 @@ export default class UserController {
       }
 
       return errorResponse(res, status, error.message);
+    }
+  }
+
+  /**
+   * @description logout user method
+   *
+   * @param req
+   * @param res
+   *
+   * @return { json } success | error
+   */
+  static logoutUser = async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+      redisClient.lPush('token', token);
+      return successResponse(res, 200, 'you are logged out');
+    } catch (error) {
+      return errorResponse(res, 500, 'something went wrong', error.message);
     }
   }
 }

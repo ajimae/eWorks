@@ -4,12 +4,20 @@ services:
     container_name: electronic_work
     restart: always
     build: .
+    environment:
+      - REDIS_URL=redis://cache
     ports:
       - '80:3000'
     links:
       - mongo
+      - redis
   mongo:
     container_name: mongo
     image: mongo
     ports:
       - "27017:27017"
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
