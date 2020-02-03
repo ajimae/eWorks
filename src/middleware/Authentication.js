@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import models from '../models';
 import Response from '../helpers/Response';
+import { redisClient } from '../db/redis-client';
 
 const { errorResponse } = Response;
 
@@ -57,7 +58,7 @@ export default class {
    *
    * @return { user payload | error }
    */
-  static verifyUserToken = (req, res, next) => {
+  static verifyUserToken = async (req, res, next) => {
     if (!req.headers.authorization) {
       // return res.status(401).json({
       //   status: 'error',
@@ -67,6 +68,16 @@ export default class {
     }
 
     const token = req.headers.authorization.split(' ')[1];
+
+    try {
+      const cacheResult = await redisClient.lRange('token', 0, 99999999);
+      if (cacheResult.indexOf(token) > -1) {
+        return errorResponse(res, 400, 'session expired, please login');
+      }
+    } catch (error) {
+      errorResponse(res, 500, 'server error');
+    }
+
     const decoded = this.verifyToken(token);
 
     if (decoded.error) {
